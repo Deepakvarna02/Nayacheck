@@ -1,0 +1,5 @@
+
+> nayacheck-backend@0.1.0 start
+> node dist/server.js
+
+{"level":"info","message":{"port":4000,"stage":"server_started"},"timestamp":"2026-05-03T10:20:35.122Z"}

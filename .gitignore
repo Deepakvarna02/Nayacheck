@@ -1,0 +1,7 @@
+node_modules
+.next
+dist
+coverage
+.env
+backend/data/sessions/*
+!backend/data/sessions/.gitkeep
