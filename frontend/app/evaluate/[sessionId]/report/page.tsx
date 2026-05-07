@@ -62,6 +62,12 @@ export default function ReportPage({ params }: { params: { sessionId: string } }
   const [exporting, setExporting] = useState(false);
   const [copyState, setCopyState] = useState<'idle' | 'audit' | 'hash'>('idle');
   const caseLabel = data?.sourceMode === 'practice_case' ? 'Sample Case' : 'Active Case';
+  const reportCards: Array<[string, string, 'audit' | 'hash' | null]> = [
+    ['Audit ID', data?.auditId ?? '', 'audit'],
+    ['Generated', data ? new Date(data.generatedAt).toLocaleString('en-IN') : '', null],
+    ['Integrity Hash', data?.integrityHash ?? '', 'hash'],
+    ['Sign-off', data?.signOffFields.reviewedBy ? 'Signed off' : 'Pending sign-off', null]
+  ];
 
   useEffect(() => {
     const loadReport = async () => {
@@ -156,12 +162,7 @@ export default function ReportPage({ params }: { params: { sessionId: string } }
         {data ? (
           <>
             <div className="mt-8 grid gap-4 lg:grid-cols-4">
-              {[
-                ['Audit ID', data.auditId, 'audit' as const],
-                ['Generated', new Date(data.generatedAt).toLocaleString('en-IN'), null],
-                ['Integrity Hash', data.integrityHash, 'hash' as const],
-                ['Sign-off', signOffStatus, null]
-              ].map(([label, value, copyType]) => (
+              {reportCards.map(([label, value, copyType]) => (
                 <div key={label} className="panel rounded-[24px] p-5">
                   <div className="text-xs uppercase tracking-[0.18em] text-slate-500">{label}</div>
                   <div className="mt-2 break-words text-sm font-semibold text-slate-900">{value}</div>

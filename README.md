@@ -300,6 +300,15 @@ docker-compose up --build
 - [ ] Configure logging aggregation
 - [ ] Test with 50+ bidder packets for scale
 
+### Recommended Vercel Setup
+NyayaCheck is best hosted as a split deployment:
+
+- Frontend: Vercel, using `frontend/` as the project root
+- Backend: Render, Railway, Fly.io, or another Node host that can run the Express API and file/session workflows
+- Environment variable on Vercel: `API_BASE_URL=<your backend URL>`
+
+The frontend proxy at `/api/proxy/*` will forward all requests to the backend URL above, so the Vercel app stays clean and the API can scale independently.
+
 ---
 
 ## 🛠️ Configuration
@@ -317,7 +326,8 @@ REDIS_DISABLED       # true = file-backed, false = Redis (default: true)
 
 ### Frontend Environment Variables
 ```
-NEXT_PUBLIC_API_URL  # Backend API base URL (default: http://localhost:4000)
+API_BASE_URL         # Backend API base URL for Vercel/production
+NEXT_PUBLIC_API_URL  # Optional fallback for local development (default: http://localhost:4000)
 ```
 
 ---

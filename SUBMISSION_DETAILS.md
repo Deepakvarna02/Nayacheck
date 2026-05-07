@@ -182,8 +182,9 @@ cd frontend && npm install
 cd ../backend && npm install
 
 # Environment setup
-# Backend: No env file needed for local demo (uses localhost:3000)
-# Frontend: NEXT_PUBLIC_API_URL defaults to http://localhost:4000
+# Backend: use backend/.env.example as the template
+# Frontend: API_BASE_URL should point to the hosted backend in production
+#            NEXT_PUBLIC_API_URL remains a local-dev fallback for localhost
 
 # Build backend
 cd backend && npm run build
@@ -192,6 +193,16 @@ cd backend && npm run build
 cd backend && npm run dev      # Starts Express on http://localhost:4000
 cd frontend && npm run dev     # Starts Next.js on http://localhost:3000
 ```
+
+### Vercel Deployment Recommendation
+
+For production hosting, deploy the frontend on Vercel and the backend on a separate Node host.
+
+1. Set the Vercel project root to `frontend/`.
+2. Add `API_BASE_URL=<your backend URL>` in Vercel environment variables.
+3. Keep the backend running on Render, Railway, Fly.io, or similar with public HTTPS access.
+
+This keeps the browser-facing app fast on Vercel while leaving the API and file/session processing on infrastructure that supports the Express workload.
 
 ### Testing the Workflow
 
